@@ -25,6 +25,7 @@ deck = create_deck()
 spade_str = 'SPADES'
 heart_str = 'HEARTS'
 diamond_str = 'DIAMOND'
+club_str = 'CLUB'
 
 played_spade = []
 played_heart = []
@@ -68,6 +69,21 @@ def show_field():
     return ('Current Spades: ' + str(played_spade)), ('Current Hearts: ' + str(played_heart)),\
     ('Current Diamonds: ' + str(played_diamond)), ('Current Clubs: ' + str(played_club))
 
+#function to determine drinks
+def drink_counter(suit):
+    if suit == spade_str:
+        drinks = len(played_spade)
+        return str(drinks) + ' drinks!'
+    elif suit == heart_str:
+        drinks = len(played_heart)
+        return str(drinks) + ' drinks!'
+    elif suit == diamond_str:
+        drinks = len(played_diamond)
+        return str(drinks) + ' drinks!'
+    else:
+        drinks = len(played_club)
+        return str(drinks) + ' drinks!'
+
 #functions for player turns
 def player1_turn():
     print(show_field())
@@ -79,10 +95,15 @@ def player1_turn():
     player_card_index = player1_hand.index(player_card.upper())
     if spade_str in player_card.upper():
         played_spade.append(player1_hand.pop(player_card_index))
+        print(drink_counter(spade_str))
     elif heart_str in player_card.upper():
         played_heart.append(player1_hand.pop(player_card_index))
+        print(drink_counter(heart_str))
     elif diamond_str in player_card.upper():
-        played_diamond.append(player1_hand.pop(player_card_index))
+        played_diamond.append(player1_hand.pop(player_card_index)))
+        print(drink_counter(diamond_str))
     else:
         played_club.append(player1_hand.pop(player_card_index))
+        print(drink_counter(club_str))
 
+player1_turn()
