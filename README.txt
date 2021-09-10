@@ -1,11 +1,12 @@
 This is a python3 program for the drinking card game "Electric 7's"
 
 How to play and rules:
--Select the number of players
+-Select the number of players (3 - 6)
 -The 4 different suits sevens from a deck of cards will be laid out and the remaining cards will be
  evenly dealt to the players
 -Starting with player one, the players will take turns adding their cards to the laid down by suit. The 
  must play a card on their turn.
+       -Cards are played by typing the number followed by of and the suit. EX: 7 of clubs
 -The goal of the game is to play cards down as to branch out numerically in either direction from the sevens
  of each suit already played. If the player is able to play a card in a suit that continues on either
  side of the already played cards without a break, they give out the number of drinks equal to the number
