@@ -73,16 +73,52 @@ def show_field():
 def drink_counter(suit):
     if suit == spade_str:
         drinks = len(played_spade)
-        return str(drinks) + ' drinks!'
+        spade_num_list = []
+        for cards in played_spade:
+            cards_stripped = cards.strip(' OF SPADES')
+            spade_num_list.append(int(cards_stripped))
+        spade_num_list.sort()
+        spade_range = list(range(spade_num_list[0], spade_num_list[-1] + 1))
+        if spade_num_list == spade_range:
+            return 'Give out ' + str(drinks) + ' drinks!'
+        else:
+            return 'Take ' + str(spade_num_list[-1] - spade_num_list[0] + 1) + ' drinks!'
     elif suit == heart_str:
         drinks = len(played_heart)
-        return str(drinks) + ' drinks!'
+        heart_num_list = []
+        for cards in played_heart:
+            cards_stripped = cards.strip(' OF HEARTS')
+            heart_num_list.append(int(cards_stripped))
+        heart_num_list.sort()
+        heart_range = list(range(heart_num_list[0], heart_num_list[-1] + 1))
+        if heart_num_list == heart_range:
+            return 'Give out ' + str(drinks) + ' drinks!'
+        else:
+            return 'Take ' + str(heart_num_list[-1] - heart_num_list[0] + 1) + ' drinks!'
     elif suit == diamond_str:
         drinks = len(played_diamond)
-        return str(drinks) + ' drinks!'
+        diamond_num_list = []
+        for cards in played_diamond:
+            cards_stripped = cards.strip(' OF DIAMONDS')
+            diamond_num_list.append(int(cards_stripped))
+        diamond_num_list.sort()
+        diamond_range = list(range(diamond_num_list[0], diamond_num_list[-1] + 1))
+        if diamond_num_list == diamond_range:
+            return 'Give out ' + str(drinks) + ' drinks!'
+        else:
+            return 'Take ' + str(diamond_num_list[-1] - diamond_num_list[0] + 1) + ' drinks!'
     else:
         drinks = len(played_club)
-        return str(drinks) + ' drinks!'
+        club_num_list = []
+        for cards in played_club:
+            cards_stripped = cards.strip(' OF CLUBS')
+            club_num_list.append(int(cards_stripped))
+        club_num_list.sort()
+        club_range = list(range(club_num_list[0], club_num_list[-1] + 1))
+        if club_num_list == club_range:
+            return 'Give out ' + str(drinks) + ' drinks!'
+        else:
+            return 'Take ' + str(club_num_list[-1] - club_num_list[0] + 1) + ' drinks!'
 
 #functions for player turns
 def player1_turn():
@@ -100,10 +136,9 @@ def player1_turn():
         played_heart.append(player1_hand.pop(player_card_index))
         print(drink_counter(heart_str))
     elif diamond_str in player_card.upper():
-        played_diamond.append(player1_hand.pop(player_card_index)))
+        played_diamond.append(player1_hand.pop(player_card_index))
         print(drink_counter(diamond_str))
     else:
         played_club.append(player1_hand.pop(player_card_index))
         print(drink_counter(club_str))
 
-player1_turn()
