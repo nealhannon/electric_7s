@@ -1,5 +1,5 @@
 # import modules being used
-import itertools, random, math
+import random, re
 
 # # welcome the players, advise to look at readme for rules, and establish number of players
 print('Welcome to Electric 7\'s! Look at the README for how to play information and rules.')
@@ -40,14 +40,14 @@ played_club.append(deck.pop(24))
 
 random.shuffle(deck)
 
-def deal_cards(deck, num_players):
-    player1_hand = []
-    player2_hand = []
-    player3_hand = []
-    player4_hand = []
-    player5_hand = []
-    player6_hand = []
+player1_hand = []
+player2_hand = []
+player3_hand = []
+player4_hand = []
+player5_hand = []
+player6_hand = []
 
+def deal_cards(deck, num_players):
     while len(deck) > 0:
         player1_hand.append(deck.pop(0))
         player2_hand.append(deck.pop(0))
@@ -59,13 +59,20 @@ def deal_cards(deck, num_players):
         if num_players == 6 and len(deck) > 0:
             player6_hand.append(deck.pop(0))
     return player1_hand, player2_hand, player3_hand, player4_hand, player5_hand, player6_hand
+
     
-#function to show cards on playing field
+#function to sort and show cards on playing field
+import re
+def atoi(text):
+    return int(text) if text.isdigit() else text
+def natural_keys(text):
+    return [ atoi(c) for c in re.split('(\d+)',text) ]
+
 def show_field():
-    played_spade.sort()
-    played_heart.sort()
-    played_diamond.sort()
-    played_club.sort()
+    played_spade.sort(key=natural_keys)
+    played_heart.sort(key=natural_keys)
+    played_diamond.sort(key=natural_keys)
+    played_club.sort(key=natural_keys)
     print('Current Spades: ' + str(played_spade))
     print('Current Hearts: ' + str(played_heart))
     print('Current Diamonds: ' + str(played_diamond))
@@ -163,28 +170,38 @@ def player_turn(player):
 def play_game():
     deal_cards(deck, int(num_players))
     game_counter = 0
-    while game_counter <= 48:
+    while game_counter < 48:
         print('Player 1\'s turn:')
         player_turn(1)
         game_counter += 1
+        if game_counter == 48:
+            break
         print('Player 2\'s turn:')
         player_turn(2)
         game_counter += 1
+        if game_counter == 48:
+            break
         print('Player 3\'s turn:')
         player_turn(3)
         game_counter += 1
+        if game_counter == 48:
+            break
         if int(num_players) >= 4:
             print('Player 4\'s turn:')
             player_turn(4)
             game_counter += 1
+            if game_counter == 48:
+                break
         if int(num_players) >= 5:
             print('Player 5\'s turn:')
             player_turn(5)
             game_counter += 1
+            if game_counter == 48:
+                break
         if int(num_players) == 6:
             print('Player 6\'s turn:')
             player_turn(6)
-            game_counter += 1
+            game_counter += 1    
     print()        
     print('GAME OVER! THANK YOU FOR PLAYING! FEEL FREE TO RESTART THE PROGRAM TO PLAY AGAIN!')
     print()
