@@ -121,24 +121,36 @@ def drink_counter(suit):
             return 'Take ' + str(club_num_list[-1] - club_num_list[0] + 1) + ' drinks!'
 
 #functions for player turns
-def player1_turn():
+def player_turn(player):
+    if player == 1:
+        player_hand = player1_hand
+    elif player == 2:
+        player_hand = player2_hand
+    elif player == 3:
+        player_hand = player3_hand
+    elif player == 4:
+        player_hand = player4_hand
+    elif player == 5:
+        player_hand = player5_hand
+    else:
+        player_hand = player6_hand
     print(show_field())
-    print('Your hand: ' + str(player1_hand))
+    print('Your hand: ' + str(player_hand))
     player_card = input('What card would you like to play? (# of Suit) ')
-    while player_card.upper() not in str(player1_hand):
+    while player_card.upper() not in str(player_hand):
         print('Sorry you dont have that card in your hand.')
         player_card = input('What card would you like to play? (# of Suit)')
     player_card_index = player1_hand.index(player_card.upper())
     if spade_str in player_card.upper():
-        played_spade.append(player1_hand.pop(player_card_index))
+        played_spade.append(player_hand.pop(player_card_index))
         print(drink_counter(spade_str))
     elif heart_str in player_card.upper():
-        played_heart.append(player1_hand.pop(player_card_index))
+        played_heart.append(player_hand.pop(player_card_index))
         print(drink_counter(heart_str))
     elif diamond_str in player_card.upper():
-        played_diamond.append(player1_hand.pop(player_card_index))
+        played_diamond.append(player_hand.pop(player_card_index))
         print(drink_counter(diamond_str))
     else:
-        played_club.append(player1_hand.pop(player_card_index))
+        played_club.append(player_hand.pop(player_card_index))
         print(drink_counter(club_str))
 
