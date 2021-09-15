@@ -3,12 +3,13 @@ import itertools, random, math
 
 # # welcome the players, advise to look at readme for rules, and establish number of players
 print('Welcome to Electric 7\'s! Look at the README for how to play information and rules.')
-
+print()
 num_players = input('Please enter the number of players between 3 and 6: ')
 while int(num_players) < 3 or int(num_players) > 6:
     print('Sorry this game only supports 3 - 6 players.')
     num_players = input('Please enter the number of players between 3 and 6: ')
 print('We have ' + str(num_players) + ' players! Lets get started')
+print()
 
 #Deal cards to players and establish playing field
 card_numbers = range(1,14)
@@ -40,34 +41,36 @@ played_club.append(deck.pop(24))
 random.shuffle(deck)
 
 def deal_cards(deck, num_players):
-    n = math.ceil(len(deck)/num_players)
-    for x in range(0, len(deck), n):
-        hand = deck[x: n+x]
-        if len(hand) < n:
-            hand = hand + [None for y in range(n-len(deck))]
-        yield hand
+    player1_hand = []
+    player2_hand = []
+    player3_hand = []
+    player4_hand = []
+    player5_hand = []
+    player6_hand = []
+
+    while len(deck) > 0:
+        player1_hand.append(deck.pop(0))
+        player2_hand.append(deck.pop(0))
+        player3_hand.append(deck.pop(0))
+        if num_players >= 4 and len(deck) > 0:
+            player4_hand.append(deck.pop(0))
+        if num_players >= 5 and len(deck) > 0:
+            player5_hand.append(deck.pop(0))
+        if num_players == 6 and len(deck) > 0:
+            player6_hand.append(deck.pop(0))
+    return player1_hand, player2_hand, player3_hand, player4_hand, player5_hand, player6_hand
     
-player_hands = deal_cards(deck, int(num_players))
-player_hands_list = list(player_hands)
-
-player1_hand = (player_hands_list[0])
-player2_hand = (player_hands_list[1])
-player3_hand = (player_hands_list[2])
-if int(num_players) >= 4:
-    player4_hand = (player_hands_list[3])
-if int(num_players) >= 5:
-    player5_hand = (player_hands_list[4])
-if int(num_players) == 6:
-    player6_hand = (player_hands_list[5])
-
 #function to show cards on playing field
 def show_field():
     played_spade.sort()
     played_heart.sort()
     played_diamond.sort()
     played_club.sort()
-    return ('Current Spades: ' + str(played_spade)), ('Current Hearts: ' + str(played_heart)),\
-    ('Current Diamonds: ' + str(played_diamond)), ('Current Clubs: ' + str(played_club))
+    print('Current Spades: ' + str(played_spade))
+    print('Current Hearts: ' + str(played_heart))
+    print('Current Diamonds: ' + str(played_diamond))
+    print('Current Clubs: ' + str(played_club))
+    print()
 
 #function to determine drinks
 def drink_counter(suit):
@@ -120,7 +123,7 @@ def drink_counter(suit):
         else:
             return 'Take ' + str(club_num_list[-1] - club_num_list[0] + 1) + ' drinks!'
 
-#functions for player turns
+#function for player turns
 def player_turn(player):
     if player == 1:
         player_hand = player1_hand
@@ -134,13 +137,14 @@ def player_turn(player):
         player_hand = player5_hand
     else:
         player_hand = player6_hand
-    print(show_field())
+    show_field()
     print('Your hand: ' + str(player_hand))
+    print()
     player_card = input('What card would you like to play? (# of Suit) ')
     while player_card.upper() not in str(player_hand):
         print('Sorry you dont have that card in your hand.')
         player_card = input('What card would you like to play? (# of Suit)')
-    player_card_index = player1_hand.index(player_card.upper())
+    player_card_index = player_hand.index(player_card.upper())
     if spade_str in player_card.upper():
         played_spade.append(player_hand.pop(player_card_index))
         print(drink_counter(spade_str))
@@ -153,4 +157,36 @@ def player_turn(player):
     else:
         played_club.append(player_hand.pop(player_card_index))
         print(drink_counter(club_str))
+    print()
 
+#function to play
+def play_game():
+    deal_cards(deck, int(num_players))
+    game_counter = 0
+    while game_counter <= 48:
+        print('Player 1\'s turn:')
+        player_turn(1)
+        game_counter += 1
+        print('Player 2\'s turn:')
+        player_turn(2)
+        game_counter += 1
+        print('Player 3\'s turn:')
+        player_turn(3)
+        game_counter += 1
+        if int(num_players) >= 4:
+            print('Player 4\'s turn:')
+            player_turn(4)
+            game_counter += 1
+        if int(num_players) >= 5:
+            print('Player 5\'s turn:')
+            player_turn(5)
+            game_counter += 1
+        if int(num_players) == 6:
+            print('Player 6\'s turn:')
+            player_turn(6)
+            game_counter += 1
+    print()        
+    print('GAME OVER! THANK YOU FOR PLAYING! FEEL FREE TO RESTART THE PROGRAM TO PLAY AGAIN!')
+    print()
+
+play_game()
